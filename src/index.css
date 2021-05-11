@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.badge{
+  height: 35px !important;
+  min-width: 35px !important;
+  border-radius: 100% !important;
+  background-color: #10B981;
+  color: white;
+}

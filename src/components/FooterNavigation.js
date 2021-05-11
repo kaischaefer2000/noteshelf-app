@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom';
 
 const FooterNavigation = () => {
     const [value, setValue] = React.useState('recents');
+    console.log(value)
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -55,7 +56,7 @@ const FooterNavigation = () => {
                 style={{pointerEvents: "none"}}
                 icon={
                         <SvgIcon 
-                            className="text-green-400"
+                            className="text-green-300"
                             style={{width: '3rem', height: '3rem', pointerEvents: 'none'}}
                         >
                             <AddCircleIcon />

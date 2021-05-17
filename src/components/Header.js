@@ -4,10 +4,9 @@ import SearchIcon from '@material-ui/icons/Search';
 
 
 
-const Header = () => {
-    const Path = window.location.pathname;     
+const Header = ({title}) => {
     return (
-        <header className="bg-gradient-to-r from-indigo-600 to-indigo-500 py-2 fixed min-w-full rounded-b-md">
+        <header className="z-50 bg-gradient-to-r from-indigo-600 to-indigo-500 py-2 fixed min-w-full rounded-b-md">
             <SvgIcon viewBox="0 0 15 10" className="text-white float-left text-xs cursor-pointer mt-0.5 ml-3">
                 <ArrowBackIosIcon/>
             </SvgIcon>
@@ -15,30 +14,7 @@ const Header = () => {
                 <SearchIcon/>
             </SvgIcon>
             
-            <h1 className="text-center text-sm text-white pt-1">
-                {(() => {
-                        
-                   switch (Path) {
-                      case '/artikel':
-                          return (
-                            <div>Meine Artikel</div>
-                          )
-                      case '/favoriten':
-                          return (
-                            <div>Meine Favoriten</div>
-                          )
-                      case '/profil':
-                          return (
-                            <div>Mein Profil</div>
-                          )
-                      default:
-                          return (
-                            <div>Mein Bücher</div>
-                          )
-                   }
-               
-                })()}
-            </h1>
+            <h1 className="text-center text-md text-white pt-0.5">{title}</h1>
         </header>
     )
 }

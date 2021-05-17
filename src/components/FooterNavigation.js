@@ -3,9 +3,10 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import DescriptionIcon from '@material-ui/icons/Description';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PersonIcon from '@material-ui/icons/Person';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { SvgIcon } from "@material-ui/core";
 import {Link} from 'react-router-dom';
 
@@ -13,7 +14,7 @@ import {Link} from 'react-router-dom';
 
 const FooterNavigation = () => {
     const [value, setValue] = React.useState('recents');
-    console.log(value)
+    console.log(value);
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -21,7 +22,8 @@ const FooterNavigation = () => {
     return (
         <BottomNavigation
           value={value}
-          className="bg-gradient-to-r from-indigo-600 to-indigo-500 fixed min-w-full bottom-0 pt-1"
+          className="z-50 bg-gradient-to-r from-indigo-600 to-indigo-500 fixed min-w-full bottom-0 pt-1"
+          style={{height: '65px'}}
           onChange={handleChange} 
           classes={{children: ''}}
           
@@ -55,12 +57,14 @@ const FooterNavigation = () => {
                 label="Hinzufügen"     
                 style={{pointerEvents: "none"}}
                 icon={
-                        <SvgIcon 
-                            className="text-green-300"
-                            style={{width: '3rem', height: '3rem', pointerEvents: 'none'}}
-                        >
-                            <AddCircleIcon />
-                        </SvgIcon>
+                        // <SvgIcon 
+                        //     className="text-green-300"
+                        //     style={{width: '3rem', height: '3rem', pointerEvents: 'none'}}
+                        // >
+                            <Fab aria-label="add" style={{width: '3rem', height: '3rem', pointerEvents: 'none', color: 'white', backgroundColor: '#ED5BA3'}}>
+                              <AddIcon />
+                            </Fab>
+                        // </SvgIcon>
                 } 
             />
             <BottomNavigationAction 

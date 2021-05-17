@@ -1,10 +1,12 @@
 import React from 'react'
+import Articleshelf from "../components/Articleshelf"
 
-function Artikel() {
+
+function Artikel({articles}) {
   document.title = "Noteshelf -  Meine Artikel"
   return (
     <div>
-      <h1 className="pt-10">Articles Seite</h1>
+      <Articleshelf articles={articles} />
     </div>
   );
 }

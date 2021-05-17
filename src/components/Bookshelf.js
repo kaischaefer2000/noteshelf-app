@@ -1,44 +1,21 @@
 import React from 'react';
 import Book from './Book';
+import {Link} from 'react-router-dom';
 
-const books = [
-  {
-    title: `<strong>Der Alchimist</strong>`,
-    author: `Paulo Coelho`,
-    pages: `176`,
-    // genre: ['Roman', 'Fantasy', 'Drama']
-    genre: 'Roman'
-  },
-  {
-    title: `<strong>Die Gesetze der Gewinner</strong>`,
-    author: `Bodo Schäfer`,
-    pages: `325`,
-    // genre: ['Sachbuch', 'Persönlichkeitsentwicklung']
-    genre: 'Persönlichkeitsentwicklung'
-  },
-  {
-    title: `<strong>Mininamlismus</strong>`,
-    author: `Joshua Fields Millbiurn`,
-    pages: `160`,
-    // genre: ['RSachbuch', 'Persönlichkeitsentwicklung']
-    genre: 'Persönlichkeitsentwicklung'
-  },
-  {
-    title: `<strong>Die 4 Stunden Woche</strong>`,
-    author: `Timothy Ferris`,
-    pages: `429`,
-    // genre: ['Sachbuch', 'Persönlichkeitsentwicklung']
-    genre: 'Sachbuch'
-  },
-]
 
-export default function Bookshelf() {
+export default function Bookshelf({books}) {
+  const [active, setActive] = React.useState('');
+  const navigateToNotes = (event, activeBook) => {
+      setActive( );
+  };
   return (
-    <div className="pt-10 min-h-screen bg-gray-100">
+    <div className="pt-10 min-h-screen bg-gray-200 pb-14 mb-5">
         {
             books.map((book) => {
                 return(
-                    <Book title={{ __html: book.title }} pages={{ __html: book.pages }} author={{ __html: book.author }} genre={{ __html: book.genre}} />
+                  <Link to="/buch">
+                    <Book book={book} onClick={navigateToNotes} active={active} />
+                  </Link>
                 )
             })
         }

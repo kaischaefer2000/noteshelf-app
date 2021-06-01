@@ -7,7 +7,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 'full',
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Book({book}) {
+export default function Book({book}, {active}) {
   const classes = useStyles();
 
   return (
@@ -33,7 +32,7 @@ export default function Book({book}) {
         
         <CardContent style={{width: "70%"}}>
           <Badge 
-            badgeContent={book.badge} 
+            badgeContent={book.notes.length} 
             classes={{ badge: "badge" }}
             style={{right: 30, top: 30, position: 'absolute'}}
           >  

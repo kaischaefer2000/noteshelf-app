@@ -1,12 +1,14 @@
 import React from 'react'
+import FavoriteShelf from '../components/FavoriteShelf'
 
-function Favoriten() {
+
+function Favoriten({booksArticles}) {
     document.title = "Noteshelf -  Meine Favoriten"
 
   return (
-    <div>
-      <h1 className="pt-10">Favoriten Seite</h1>
-    </div>
+    <>
+      <FavoriteShelf booksArticles={booksArticles}/>
+    </>
   );
 }
 

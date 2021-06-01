@@ -18,3 +18,8 @@ code {
   background-color: #A252EA;
   color: white;
 }
+
+.avatar{
+  width: 100px !important;
+  height: 100px !important;
+}

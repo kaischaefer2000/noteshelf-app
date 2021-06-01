@@ -14,7 +14,7 @@ export default function Booknotes({notes}) {
     
   return (
       <>
-        <div className="pt-10 min-h-screen bg-gray-100 pb-14 mb-5">
+        <div className="pt-14 min-h-screen bg-gradient-to-r from-indigo-50 to-blue-100 pb-14 mb-5">
             <Fab variant="extended" style={{margin: '1.5em 1em 1em 1em', backgroundColor:'#5BA3ED'}} >
                 <ImportContactsIcon/>
                 <h1 style={{padding: '1em', fontSize: '1.15rem'}}>{notes[0].title}</h1>

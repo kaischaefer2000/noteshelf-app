@@ -1,0 +1,46 @@
+Bei Klick auf das Herz von Notizen werden die Daten veränder und isFavorite steht auf true
+Notiz hinzufügen
+Notiz anzeigen lassen
+bei Klick auf das Buch werden die Notizen zu genau diesem Buch angezeigt
+bei Klick auf einen Artikel werden die Notizen zu genau diesem Artikel angezeigt
+Zurück Navigation
+Geht man bei Notiz auf einen Tag wird man auf Stichwort seite umgeleitet mit den Notizen zu genau diesem Tag
+Profil ändern
+Freunde hinzufügen
+
+Authentifizierung
+
+Bilder in firestore
+
+(wenn man buch/artikel hinzugefügt hat, stehen werte noch im formular)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+  "devDependencies": {
+    "firestore-export-import": "^0.15.0"
+  },
+  "description": "Technologies used: Tailwind CSS, Create React App, ...",
+  "main": "UploadData.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaischaefer2000/noteshelf-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaischaefer2000/noteshelf-app/issues"
+  },
+  "homepage": "https://github.com/kaischaefer2000/noteshelf-app#readme"

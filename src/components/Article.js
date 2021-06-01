@@ -27,7 +27,7 @@ export default function Article({article}) {
         
         <CardContent style={{width: "93%"}}>
           <Badge 
-            badgeContent={article.badge} 
+            badgeContent={article.notes.length} 
             classes={{ badge: "badge" }}
             style={{right: 30, top: 30, position: 'absolute'}}
           >  

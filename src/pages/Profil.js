@@ -1,11 +1,19 @@
 import React from 'react'
+import ProfileAvatar from '../components/ProfileAvatar'
+import ProfileFriends from '../components/ProfileFriends'
+import Settings from '../components/Settings'
 
-function Profil() {
-    document.title = "Noteshelf -  Mein Profil"
+function Profil({booksArticles, books, articles}) {
+    document.title = "Noteshelf -  Mein Profil";
+    console.log(books);
+
+    
 
   return (
-    <div>
-      <h1 className="pt-10">Profil Seite</h1>
+    <div className="pb-14">
+        <ProfileAvatar booksArticles={booksArticles} books={books} articles={articles}/>
+        <ProfileFriends/>
+        <Settings/>
     </div>
   );
 }

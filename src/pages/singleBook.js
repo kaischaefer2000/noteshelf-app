@@ -6,7 +6,7 @@ function SingleBook({booknotes}) {
   document.title = "Noteshelf -  Meine Notizen"
   return (
     <div>
-        <Booknotes booknotes={booknotes} />
+        <Booknotes booknotes={booknotes}/>
     </div>
   );
 }

@@ -1,18 +1,45 @@
-Bei Klick auf das Herz von Notizen werden die Daten veränder und isFavorite steht auf true
-Notiz hinzufügen
-Notiz anzeigen lassen
-bei Klick auf das Buch werden die Notizen zu genau diesem Buch angezeigt
-bei Klick auf einen Artikel werden die Notizen zu genau diesem Artikel angezeigt
-Zurück Navigation
-Geht man bei Notiz auf einen Tag wird man auf Stichwort seite umgeleitet mit den Notizen zu genau diesem Tag
-Profil ändern
-Freunde hinzufügen
+NotizView: Notiz kann gelöscht werden. Notiz kann bearbeitet werden.
+Buch / Artikel löschen.
+Bilder bei Adden von Büchern werden manchmal nicht angezeigt.
+Bei Klick auf das Herz von Notizen werden die Daten verändert und isFavorite steht auf true ( in Note ist ein Versuch, jedoch ist das sehr schwer das Object in dem Notes Array anzusteuern und da isFavorite auf true zu setzen... Firebase bietet dazu leider keine Funktion an. Es müssste besser über Fremdschlüssel gemacht werden von Collectio Notes zu Books https://stackoverflow.com/questions/46757614/how-to-update-an-array-of-objects-with-firestore)
 
-Authentifizierung
 
-Bilder in firestore
 
-(wenn man buch/artikel hinzugefügt hat, stehen werte noch im formular)
+Zweitrangig:
+- Inhalte werden basierend auf den User angezeigt
+- Profil ändern
+- Freunde hinzufügen
+- Beim Hinzufügen von Notes kann man nur einen Tag setzen
+
+
+
+
+Gewünscht:
+- Suchfunktion bei Büchern und Artikeln
+- Suchfunktion wo man direkt nach einem Wort in der Notiz suchen kann
+- Notizen exportierbar machen und auch über SM teilen 
+- Notizen zu Online Artikel (Kimberly)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -44,3 +71,18 @@ Bilder in firestore
     "url": "https://github.com/kaischaefer2000/noteshelf-app/issues"
   },
   "homepage": "https://github.com/kaischaefer2000/noteshelf-app#readme"
+
+
+
+
+
+
+
+
+
+  In FooterNavigation, um die uid eines Document in eine eigene umzuändern
+  const book1 = booksArticles.filter((book) => book.title == "Qualitative Forschung")
+        const book2 = book1[0]
+        console.log(book2)
+        var noteRef = db.collection("books").doc("Qualitative Forschung").set({author: book2.author, isBook: book2.isBook, notes: book2.notes, pages: book2.pages, title: book2.title, link: book2.link})
+        console.log(noteRef)

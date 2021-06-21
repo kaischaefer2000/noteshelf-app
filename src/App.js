@@ -4,21 +4,22 @@ import Artikel from "./pages/Artikel"
 import Favoriten from "./pages/Favoriten"
 import Profil from "./pages/Profil"
 import SingleBook from "./pages/singleBook"
+import SingleArticle from "./pages/singleArticle"
+import SingleNote from "./pages/SingleNote"
+import NoteView from "./components/NoteView"
 import Stichwort from "./pages/Stichwort"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Bookshelf from './components/Bookshelf'
-// import Der_alchimist from './assets/der_alchimist.jpg'
-// import Die_gesetze from './assets/die_gesetze_der_gewinner.jpeg'
-// import Die_4_stunden from './assets/die_vier_stunden_woche.jpg'
-// import Minimalismus from './assets/minimalismus.jpeg'
-// import Gewohnheit from './assets/die_macht_der_gewohnheit.jpg'
-// import Cafe from './assets/das_cafe_am_rande_der_welt.jpg'
-// import BookImage from './assets/default-book.jpg'
 import Booknotes from "./components/BookNotes"
+import Articlenotes from "./components/ArticleNotes"
 import TestPage from "./pages/TestPage"
 import firebase from "./Firebase"
-
+import { AuthProvider} from "./Auth"
+import PrivateRoute from './PrivateRoute'
+import SignUpp from './pages/SignUp'
+import LogIn from './pages/LogIn'
+import { AuthContext } from './Auth'
 
 
 import {
@@ -28,6 +29,7 @@ import {
   // useRecoilState,
   // useRecoilValue,
 } from 'recoil';
+
 
 // const booksArticles = [
 //   {
@@ -195,6 +197,7 @@ function App() {
 
     const [booksArticles, setBooksArticles] = React.useState([])
 
+
     React.useEffect(() => {
       const fetchData = async () =>{
         const db = firebase.firestore()
@@ -204,30 +207,46 @@ function App() {
       fetchData()
     }, [])
 
+
     const books = booksArticles.filter((medium) => (medium.isBook === true));
     const articles = booksArticles.filter((medium) => (medium.isBook === false));
-    const gewinner = booksArticles.filter((medium) => (medium.title === 'Die Gesetze der Gewinner'))
+    console.log(booksArticles)
 
   return (
+    <AuthProvider>
     <Router>
         <div className="container">
           <RecoilRoot>
             <Switch>
 
-              <Route path="/" exact>
+              <PrivateRoute path="/" exact>
                 <Header title="Meine Bücher"/>
                 <Bookshelf books={books} />
-              </Route>
+              </PrivateRoute>
 
               <Route path="/artikel" component={Artikel}>
                 <Header title="Meine Artikel"/>
                 <Artikel articles={articles}/>
               </Route>
 
+              <Route exact path="/signup" component={SignUpp}></Route>
+              <Route exact path="/login" component={LogIn}></Route>
+
+
 
               <Route path="/buch" component={SingleBook}>
                 <Header title="Meine Notizen"/>
-                <Booknotes notes={gewinner}/>
+                <Booknotes notes={booksArticles}/>
+              </Route>
+
+              <Route path="/artikel-notizen" component={SingleArticle}>
+                <Header title="Meine Notizen"/>
+                <Articlenotes notes={booksArticles}/>
+              </Route>
+
+              <Route path="/notiz" component={SingleNote}>
+                <Header title="Meine Notiz"/>
+                <NoteView booksArticles={booksArticles}/>
               </Route>
 
 
@@ -252,9 +271,11 @@ function App() {
 
             </Switch>
             </RecoilRoot>
+            
           <FooterNavigation booksArticles={booksArticles}/>
         </div>
     </Router>
+    </AuthProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
@@ -17,12 +17,22 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from '../Firebase'
-
+import { withRouter, Redirect } from "react-router";
+import { AuthContext } from "../Auth";
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import {useLocation} from 'react-router-dom'
 
 
 
 
 const FooterNavigation = ({booksArticles}) => {
+
+    const { currentUser } = useContext(AuthContext);
+
     const [value, setValue] = React.useState('recents');
 
     const handleChange = (event, newValue) => {
@@ -31,6 +41,8 @@ const FooterNavigation = ({booksArticles}) => {
     };
 
     const [seite, setSeite] = React.useState(0);
+    const [fileUrl, setFileUrl] = React.useState(null)
+
 
     const changeToBuecher = () => {
         setSeite(0)
@@ -48,7 +60,6 @@ const FooterNavigation = ({booksArticles}) => {
         setSeite(3)
     }
 
-    console.log(seite)
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -59,15 +70,41 @@ const FooterNavigation = ({booksArticles}) => {
       setOpen(false);
     };
 
+    const onFileChange = async (e) => {
+      const file = e.target.files[0]
+      const storageRef = firebase.storage().ref()
+      const fileRef = storageRef.child(file.name)
+      await fileRef.put(file)
+      setFileUrl(await fileRef.getDownloadURL())
+      console.log("onFileChange ausgeführt", fileUrl, fileRef)
+    }
+
     const [title, setTitle] = React.useState("")
     const [author, setAuthor] = React.useState("")
     const [pages, setPages] = React.useState(0)
     const [genre, setGenre] = React.useState("")
 
+
     const onCreate = () => {
         const db = firebase.firestore()
-        db.collection("books").add({title: title, author: author, pages: pages, genre: genre, isBook: true, image: "/static/media/default-book.1642792d.jpg", notes: []})
+        console.log("oncreate ausgeführt (vor)", fileUrl)
+        db.collection("books").add({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
+        console.log("oncreate ausgeführt (nach)", fileUrl)
+
+        const b1 = booksArticles.filter((b) => b.title == title)
+        const b2 = b1[0]
+        console.log(b2)
+        var noteRef = db.collection("books").doc(title).set({author: b2.author, isBook: b2.isBook, notes: b2.notes, pages: b2.pages, title: b2.title})
+        console.log(noteRef)
+
+        setTitle(null)
+        setAuthor(null)
+        setPages(null)
+        setGenre(null)
     }
+
+
+
 
     const [Atitle, setATitle] = React.useState("")
     const [Aauthor, setAAuthor] = React.useState("")
@@ -77,11 +114,59 @@ const FooterNavigation = ({booksArticles}) => {
     const onACreate = () => {
         const db = firebase.firestore()
         db.collection("books").add({title: Atitle, author: Aauthor, pages: Apages, link: Alink, isBook: false, notes: []})
+        setATitle(null)
+        setAAuthor(null)
+        setAPages(null)
+        setALink(null)
     }
 
 
 
+    const [noteHeading, setNoteHeading] = React.useState("")
+    const [noteText, setNoteText] = React.useState("")
+    const [notePages, setNotePages] = React.useState(0)
+    const [bookRef, setBookRef] = React.useState("")
+    const [isFavorite, setIsFavorite] = React.useState(false)
+    const [noteTags, setNoteTags] = React.useState([])
+
+
+    const onCreateNote = () => {
+        const db = firebase.firestore()
+        var noteRef = db.collection("books").doc(bookRef)
+        noteRef.update({
+          notes: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
+        })
+        
+        
+        console.log(noteHeading, bookRef, noteText, noteTags, notePages, isFavorite)
+        setNoteHeading(null)
+        setNoteText(null)
+        setNotePages(0)
+        setBookRef(null)
+        setIsFavorite(false)
+        setNoteTags([])
+    }
+
+    const [path, setPath] = React.useState('/')
+
+    const usePathname = () => {
+      const location = useLocation();
+      const pathName = location.pathname
+      if(path != pathName){
+        setPath(pathName)
+      }
+    }
+
+    
+    usePathname()
+
     return (
+        <>
+        {(() => {
+               switch (currentUser) {
+                  case null:
+                      return (null)
+                  default: return(
         <>
         <BottomNavigation
           value={value}
@@ -167,11 +252,11 @@ const FooterNavigation = ({booksArticles}) => {
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             
             {(() => {
-               switch (seite) {
-                  case 0:
+               switch (path) {
+                  case '/':
                       return (
                         <>
-                            <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach ein neues Buch hinzuüfigen</DialogTitle>
+                            <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach ein neues Buch hinzufügen</DialogTitle>
                               <DialogContent>
                                 <DialogContentText>
                                   Gebe die Informationen über dein neues Buch an.
@@ -213,6 +298,14 @@ const FooterNavigation = ({booksArticles}) => {
                                   value={genre}
                                   onChange={(e) => setGenre(e.target.value)}
                                 />
+                                <TextField
+                                  margin="dense"
+                                  id="cover"
+                                  label="Cover"
+                                  type="file"
+                                  fullWidth
+                                  onChange={onFileChange}
+                                />
                               </DialogContent>
                               <DialogActions>
                                 <Button onClick={handleClose} color="primary">
@@ -224,7 +317,7 @@ const FooterNavigation = ({booksArticles}) => {
                               </DialogActions>
                             </>
                       )
-                  case 1:
+                  case '/artikel':
                       return (
                         <>
                             <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach einen neuen Artikel hinzuüfigen</DialogTitle>
@@ -283,54 +376,93 @@ const FooterNavigation = ({booksArticles}) => {
                   default:
                       return (
                         <>
-                            <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach ein neues Buch hinzuüfigen</DialogTitle>
+                            <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach eine neue Notiz hinzufügen</DialogTitle>
                               <DialogContent>
                                 <DialogContentText>
-                                  Gebe die Informationen über dein neues Buch an.
+                                  Halte deine Gedanken fest!
                                 </DialogContentText>
+                                
+                                
+                                <InputLabel id="book-ref-label">Lektüre</InputLabel>
+                                <Select
+                                  margin="dense"
+                                  labelId="book-ref-label"
+                                  id="bookRef"
+                                  fullWidth
+                                  value={bookRef}
+                                  onChange={((e) => {setBookRef(e.target.value)})}
+                                >
+                                  {booksArticles.map( (book) => {
+                                    return(
+                                      <MenuItem value={book.title}>{book.title}</MenuItem>
+                                    )
+                                  })}
+                                </Select>
+                                
+                                
                                 <TextField
                                   autoFocus
+                                  autoComplete
                                   margin="dense"
-                                  id="title"
-                                  label="Titel"
+                                  id="heading"
+                                  label="Überschrift"
                                   type="text"
                                   fullWidth
-                                  value={title}
-                                  onChange={(e) => setTitle(e.target.value)}
+                                  value={noteHeading}
+                                  onChange={(e) => setNoteHeading(e.target.value)}
                                 />
+
+
                                 <TextField
                                   margin="dense"
-                                  id="author"
-                                  label="Author"
+                                  id="noteText"
+                                  label="Text"
                                   type="text"
                                   fullWidth
-                                  value={author}
-                                  onChange={(e) => setAuthor(e.target.value)}
+                                  multiline={true}
+                                  placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tatio"
+                                  value={noteText}
+                                  onChange={(e) => setNoteText(e.target.value)}
                                 />
-                                <TextField
+
+                                 <TextField
                                   margin="dense"
-                                  id="pages"
-                                  label="Seitenzahl"
+                                  id="notePages"
+                                  label="Seiten"
                                   type="number"
                                   fullWidth
-                                  value={pages}
-                                  onChange={(e) => setPages(e.target.value)}
+                                  value={notePages}
+                                  onChange={(e) => setNotePages(e.target.value)}
                                 />
-                                <TextField
-                                  margin="dense"
-                                  id="genre"
-                                  label="Genre"
-                                  type="text"
-                                  fullWidth
-                                  value={genre}
-                                  onChange={(e) => setGenre(e.target.value)}
-                                />
+
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        checked={isFavorite}
+                                        onChange={() => setIsFavorite(!isFavorite)}
+                                        name="isFavorite"
+                                        color="primary"
+                                      />
+                                    }
+                                    label="Favorit"
+                                  />
+
+                                  <TextField
+                                    margin="dense"
+                                    id="noteTags"
+                                    label="Stichwort"
+                                    type="text"
+                                    fullWidth
+                                    value={noteTags}
+                                    onChange={(e) => setNoteTags([e.target.value])}
+                                  />
+
                               </DialogContent>
                               <DialogActions>
                                 <Button onClick={handleClose} color="primary">
                                   Abbrechen
                                 </Button>
-                                <Button  onClick={() => {handleClose(); onCreate()}} color="primary">
+                                <Button  onClick={() => {handleClose(); onCreateNote()}} color="primary">
                                   Speichern
                                 </Button>
                               </DialogActions>
@@ -340,6 +472,11 @@ const FooterNavigation = ({booksArticles}) => {
            
             })()}      
         </Dialog>
+        </>
+        )
+        }
+           
+      })()} 
     </>
     )
 }

@@ -1,15 +1,31 @@
+import React, { useContext } from 'react'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { SvgIcon } from "@material-ui/core";
 import Avatar from '@material-ui/core/Avatar';
 import {Link} from 'react-router-dom';
-import Kai from '../assets/kai_profile.jpeg'
+import Kai from '../assets/kai_profile.jpeg';
+import { useHistory } from "react-router-dom";
+import { withRouter, Redirect } from "react-router";
+import { AuthContext } from "../Auth";
 
 
 
 const Header = ({title}) => {
+
+    const history = useHistory();
+    const goToPreviousPath = () => {
+        history.goBack()
+    }
+
+    const { currentUser } = useContext(AuthContext);
+
+    if (!currentUser) {
+      return <Redirect to="/login" />;
+    }
+
     return (
         <header className="z-50 bg-gradient-to-r from-indigo-600 to-indigo-500 py-2 fixed min-w-full rounded-b-md">
-            <SvgIcon viewBox="0 0 15 10" className="text-white float-left text-xs cursor-pointer mt-2 ml-5">
+            <SvgIcon onClick={goToPreviousPath} viewBox="0 0 15 10" className="text-white float-left text-xs cursor-pointer mt-2 ml-5">
                 <ArrowBackIosIcon/>
             </SvgIcon>
             {/* <SvgIcon viewBox="0 0 15 11" className="text-white float-right text-xs cursor-pointer mt-0.5 mr-3"> */}

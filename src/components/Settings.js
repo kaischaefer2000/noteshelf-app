@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import firebase from '../Firebase';
+import { withRouter, Redirect } from "react-router";
+import { AuthContext } from "../Auth";
+
+
 
 export default function Settings() {
 
@@ -13,6 +19,11 @@ export default function Settings() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const { currentUser } = useContext(AuthContext);
+
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <>
@@ -71,6 +82,10 @@ export default function Settings() {
                     }
                     label="Benachrichtigung wenn dich Freunde überholen"
                   />
+            </div>
+            <div className="p-3 flex flex-row cursor-pointer">
+                    <ExitToAppIcon className="ml-1 mt-2 z-30" onClick={() => firebase.auth().signOut()}/>
+                    <p className="ml-4 mt-2">Log out</p>
             </div>
         </div>
     </>

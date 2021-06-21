@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Book({book}, {active}) {
+export default function Book({book, active}) {
   const classes = useStyles();
 
   return (

@@ -19,7 +19,6 @@ import { AuthProvider} from "./Auth"
 import PrivateRoute from './PrivateRoute'
 import SignUpp from './pages/SignUp'
 import LogIn from './pages/LogIn'
-import { AuthContext } from './Auth'
 
 
 import {
@@ -196,21 +195,44 @@ function App() {
     document.title = "Noteshelf -  Meine Bücher"
 
     const [booksArticles, setBooksArticles] = React.useState([])
-
+    const [userImage, setUserImage] = React.useState(null)
+    const [userName, setUserName] = React.useState(null)
 
     React.useEffect(() => {
       const fetchData = async () =>{
         const db = firebase.firestore()
-        const data = await db.collection("books").get()
-        setBooksArticles(data.docs.map(doc => doc.data()))
+        const data = await db.collection("user").get()
+        const daten = data.docs.map(doc => doc.data())
+        let user = firebase.auth().currentUser;
+        const daten2 = daten.filter(d => (d.email == user.email))
+        const daten3 = daten2.map(i => i.readings)
+        setBooksArticles(daten3[0])
+        console.log(daten2)
+        setUserImage(daten2[0].image)
+        setUserName(daten2[0].name)
       }
       fetchData()
     }, [])
 
 
-    const books = booksArticles.filter((medium) => (medium.isBook === true));
-    const articles = booksArticles.filter((medium) => (medium.isBook === false));
-    console.log(booksArticles)
+    var books = []
+    var articles = []
+    const test = booksArticles.forEach(reading => {
+      if(reading.isBook == true){
+        books.push(reading)
+      }
+      else{
+        articles.push(reading)
+      }
+    }
+    )
+
+    console.log(books)
+    // // const books = booksArticles.filter((medium) => (medium.isBook === true));
+    // console.log(booksArticles[0])
+    // const articles = booksArticles.filter((medium) => (medium.isBook === false));
+
+    
 
   return (
     <AuthProvider>
@@ -220,12 +242,12 @@ function App() {
             <Switch>
 
               <PrivateRoute path="/" exact>
-                <Header title="Meine Bücher"/>
+                <Header title="Meine Bücher" userImage={userImage}/>
                 <Bookshelf books={books} />
               </PrivateRoute>
 
               <Route path="/artikel" component={Artikel}>
-                <Header title="Meine Artikel"/>
+                <Header title="Meine Artikel" userImage={userImage}/>
                 <Artikel articles={articles}/>
               </Route>
 
@@ -235,38 +257,38 @@ function App() {
 
 
               <Route path="/buch" component={SingleBook}>
-                <Header title="Meine Notizen"/>
-                <Booknotes notes={booksArticles}/>
+                <Header title="Meine Notizen" userImage={userImage}/>
+                <Booknotes notes={books}/>
               </Route>
 
               <Route path="/artikel-notizen" component={SingleArticle}>
-                <Header title="Meine Notizen"/>
+                <Header title="Meine Notizen" userImage={userImage}/>
                 <Articlenotes notes={booksArticles}/>
               </Route>
 
               <Route path="/notiz" component={SingleNote}>
-                <Header title="Meine Notiz"/>
+                <Header title="Meine Notiz" userImage={userImage}/>
                 <NoteView booksArticles={booksArticles}/>
               </Route>
 
 
               <Route path="/favoriten" component={Favoriten}>
-                <Header title="Meine Favoriten"/>
+                <Header title="Meine Favoriten" userImage={userImage}/>
                 <Favoriten booksArticles={booksArticles}/>
               </Route>
 
               <Route path="/stichwort" component={Stichwort}>
-                <Header title="Meine Stichwörter"/>
+                <Header title="Meine Stichwörter" userImage={userImage}/>
                 <Stichwort booksArticles={booksArticles}/>
               </Route>
 
               <Route path="/profil" component={Profil}>
-                <Header title="Mein Profil"/>
-                <Profil booksArticles={booksArticles}  books={books} articles={articles}/>
+                <Header title="Mein Profil" userImage={userImage}/>
+                <Profil booksArticles={booksArticles}  books={books} articles={articles} userImage={userImage} userName={userName}/>
               </Route>
 
               <Route path="/test" component={TestPage}>
-                <Header title="Mein Test"/>
+                <Header title="Mein Test" userImage={userImage}/>
               </Route>
 
             </Switch>

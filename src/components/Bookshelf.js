@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import Book from './Book';
 import {Link} from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
+import firebase from '../Firebase'
 
   export const clickedBook = atom({
     key: "clickedBook",
@@ -14,7 +15,6 @@ export default function Bookshelf({books}) {
   };
 
   const [activeBook, setActiveBook] = useRecoilState(clickedBook);
-
 
 
   return (
@@ -32,8 +32,9 @@ export default function Bookshelf({books}) {
                    <Link to="/buch">
                   <div onClick={() => navigateToNotes(actBook)} style={{zIndex: '999'}}>
                     <Book book={book}/>
+                    {console.log(book)}
                   </div>
-                   </Link>
+                  </Link>
                   </>
                 )
             })

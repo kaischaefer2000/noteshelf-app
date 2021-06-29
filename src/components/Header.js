@@ -10,7 +10,7 @@ import { AuthContext } from "../Auth";
 
 
 
-const Header = ({title}) => {
+const Header = ({title, userImage}) => {
 
     const history = useHistory();
     const goToPreviousPath = () => {
@@ -30,7 +30,7 @@ const Header = ({title}) => {
             </SvgIcon>
             {/* <SvgIcon viewBox="0 0 15 11" className="text-white float-right text-xs cursor-pointer mt-0.5 mr-3"> */}
                 <Link to="/profil">
-                    <Avatar className="float-right" alt="Kai Schäfer" src={Kai} style={{margin: '0.1em 1em 0.1em 0.1em', boxShadow: '0 10px 10px -5px'}}/>
+                    <Avatar className="float-right" alt="Kai Schäfer" src={userImage} style={{margin: '0.1em 1em 0.1em 0.1em', boxShadow: '0 10px 10px -5px'}}/>
                 </Link>
             {/* </SvgIcon> */}
             

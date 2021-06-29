@@ -3,7 +3,7 @@ import ProfileAvatar from '../components/ProfileAvatar'
 import ProfileFriends from '../components/ProfileFriends'
 import Settings from '../components/Settings'
 
-function Profil({booksArticles, books, articles}) {
+function Profil({booksArticles, books, articles, userImage, userName}) {
     document.title = "Noteshelf -  Mein Profil";
     console.log(books);
 
@@ -11,7 +11,7 @@ function Profil({booksArticles, books, articles}) {
 
   return (
     <div className="pb-14">
-        <ProfileAvatar booksArticles={booksArticles} books={books} articles={articles}/>
+        <ProfileAvatar booksArticles={booksArticles} books={books} articles={articles} userImage={userImage} userName={userName}/>
         <ProfileFriends/>
         <Settings/>
     </div>

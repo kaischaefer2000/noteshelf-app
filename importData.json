@@ -1,0 +1,309 @@
+{
+    "user":
+    [{
+        "email": "test@web.de",
+        "readings":
+        [{
+            "title": "Der Alchimist",
+            "author": "Paulo Coelho",
+            "pages": 176,
+            "genre": ["Roman", "Fantasy" ,"Drama"],
+            "image": "der_alchimist",
+            "badge": 4,
+            "isBook": true,
+            "notes": [
+              {
+                "title": "Alchimist 1",
+                "book": "Der Alchimist",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": true
+              },
+              {
+                "title": "Alchimist 2",
+                "book": "Der Alchimist",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": false
+              }
+            ]
+        },
+        {
+            "title": "Die Gesetze der Gewinner",
+            "author": "Bodo Schäfer",
+            "pages": 325,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "die_gesetze",
+            "badge": 11,
+            "isBook": true,
+            "notes": [
+              {
+                "title": "Kein Multitasking!",
+                "book": "Die Gesetze der Gewinner",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": true
+              },
+              {
+                "title": "Sei mutig!",
+                "book": "Die Gesetze der Gewinner",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": false
+              }
+            ]
+        },
+        {
+            "title": "Mininamlismus",
+            "author": "Joshua Fields Millbiurn",
+            "pages": 160,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "minimalismus",
+            "badge": 8,
+            "isBook": true    
+        },
+        {
+            "title": "Die 4 Stunden Woche",
+            "author": "Timothy Ferris",
+            "pages": 429,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "die_4_stunden",
+            "badge": 6,
+            "isBook": true
+        },
+        {
+            "title": "Die Macht der Gewohnheit",
+            "author": "Charles Duhigg",
+            "pages": 351,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "gewohnheit",
+            "badge": 9,
+            "isBook": true
+        },
+        {
+            "title": "Das Café am Rande der Welt",
+            "author": "John Strelecky",
+            "pages": 128,
+            "genre": ["Roman", "Persönlichkeitsentwicklung"],
+            "image": "cafe",
+            "badge": 10,
+            "isBook": true
+        },
+        {
+            "title": "Mehr Zeit für mich! 5 Tipps fürs Zeitmanagement im Alltag",
+            "author": "Matthias Gräf",
+            "pages": 1,
+            "badge": 3,
+            "isBook": false,
+            "link": "https://www.startplatz.de/zeitmanagement-tipps/"
+        },
+        {
+            "title": "Richtiges Zeitmanagement: Der Schlüssel zum Erfolg",
+            "author": "Thomas Kresser",
+            "pages": 3,
+            "badge": 5,
+            "isBook": false,
+            "link": "https://www.ingenieur.de/karriere/arbeitsleben/acht-tipps-wie-sie-ihre-zeit-besser-einteilen/"
+        },
+        {
+            "title": "Die 13 Zeitmanagement Tipps",
+            "author": "Dr. Martin Krengel",
+            "pages": 2,
+            "badge": 2,
+            "isBook": false,
+            "link": "https://www.studienstrategie.de/zeitmanagement/zeitmanagement-tipps/",
+            "notes": [
+              {
+                "title": "Zeitmanagement 1",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": false
+              },
+              {
+                "title": "Zeitmanagement 2",
+                "book": "Der Alchimist",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": true
+              }
+            ]
+        },
+        {
+            "title": "Qualitative Forschung und quantitative Forschung",
+            "author": "Lea Genau",
+            "pages": 1,
+            "badge": 5,
+            "isBook": false,
+            "link": "https://www.scribbr.de/methodik/qualitative-forschung-quantitative-forschung/"
+          },
+          {
+            "title": "Qualitative Forschung",
+            "author": "",
+            "pages": 1,
+            "badge": 4,
+            "isBook": false,
+            "link": "https://www.qualtrics.com/de/erlebnismanagement/marktforschung/qualitative-forschung/"
+        }]
+
+    },
+
+    {
+        "email": "test2@web.de",
+        "readings":
+        [{
+            "title": "Der Test Alchimist",
+            "author": "Paulo Coelho",
+            "pages": 176,
+            "genre": ["Roman", "Fantasy" ,"Drama"],
+            "image": "der_alchimist",
+            "badge": 4,
+            "isBook": true,
+            "notes": [
+              {
+                "title": "Alchimist 1",
+                "book": "Der Alchimist",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": true
+              },
+              {
+                "title": "Alchimist 2",
+                "book": "Der Alchimist",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": false
+              }
+            ]
+        },
+        {
+            "title": "Die Gesetze der Gewinner",
+            "author": "Bodo Schäfer",
+            "pages": 325,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "die_gesetze",
+            "badge": 11,
+            "isBook": true,
+            "notes": [
+              {
+                "title": "Kein Multitasking!",
+                "book": "Die Gesetze der Gewinner",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": true
+              },
+              {
+                "title": "Sei mutig!",
+                "book": "Die Gesetze der Gewinner",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": false
+              }
+            ]
+        },
+        {
+            "title": "Mininamlismus",
+            "author": "Joshua Fields Millbiurn",
+            "pages": 160,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "minimalismus",
+            "badge": 8,
+            "isBook": true    
+        },
+        {
+            "title": "Die 4 Stunden Woche",
+            "author": "Timothy Ferris",
+            "pages": 429,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "die_4_stunden",
+            "badge": 6,
+            "isBook": true
+        },
+        {
+            "title": "Die Macht der Gewohnheit",
+            "author": "Charles Duhigg",
+            "pages": 351,
+            "genre": ["Sachbuch", "Persönlichkeitsentwicklung"],
+            "image": "gewohnheit",
+            "badge": 9,
+            "isBook": true
+        },
+        {
+            "title": "Das Café am Rande der Welt",
+            "author": "John Strelecky",
+            "pages": 128,
+            "genre": ["Roman", "Persönlichkeitsentwicklung"],
+            "image": "cafe",
+            "badge": 10,
+            "isBook": true
+        },
+        {
+            "title": "Mehr Zeit für mich! 5 Tipps fürs Zeitmanagement im Alltag",
+            "author": "Matthias Gräf",
+            "pages": 1,
+            "badge": 3,
+            "isBook": false,
+            "link": "https://www.startplatz.de/zeitmanagement-tipps/"
+        },
+        {
+            "title": "Richtiges Zeitmanagement: Der Schlüssel zum Erfolg",
+            "author": "Thomas Kresser",
+            "pages": 3,
+            "badge": 5,
+            "isBook": false,
+            "link": "https://www.ingenieur.de/karriere/arbeitsleben/acht-tipps-wie-sie-ihre-zeit-besser-einteilen/"
+        },
+        {
+            "title": "Die 13 Zeitmanagement Tipps",
+            "author": "Dr. Martin Krengel",
+            "pages": 2,
+            "badge": 2,
+            "isBook": false,
+            "link": "https://www.studienstrategie.de/zeitmanagement/zeitmanagement-tipps/",
+            "notes": [
+              {
+                "title": "Zeitmanagement 1",
+                "pages": "14-16",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Zeitmanagement", "Effizientes Arbeiten"],
+                "isFavorite": false
+              },
+              {
+                "title": "Zeitmanagement 2",
+                "book": "Der Alchimist",
+                "pages": "23-26",
+                "text": "Das Gehirn kann sich immer nur auf eine Sache konzentrieren. Wenn wir Sachen gleichzeitig tun, wechselt unsere Aufmerksamkeit schnell zwischen den Teilen...",
+                "tags": ["Persönlichkeitsentwicklung"],
+                "isFavorite": true
+              }
+            ]
+        },
+        {
+            "title": "Qualitative Forschung und quantitative Forschung",
+            "author": "Lea Genau",
+            "pages": 1,
+            "badge": 5,
+            "isBook": false,
+            "link": "https://www.scribbr.de/methodik/qualitative-forschung-quantitative-forschung/"
+          },
+          {
+            "title": "Qualitative Forschung",
+            "author": "",
+            "pages": 1,
+            "badge": 4,
+            "isBook": false,
+            "link": "https://www.qualtrics.com/de/erlebnismanagement/marktforschung/qualitative-forschung/"
+        }]
+
+    }]
+
+}

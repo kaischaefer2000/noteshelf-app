@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
 import Avatar from '@material-ui/core/Avatar';
-import Kai from '../assets/kai_profile.jpeg'
 import { AuthContext } from "../Auth";
 
 
-function ProfileAvatar({booksArticles, books, articles}) {
+function ProfileAvatar({booksArticles, books, articles, userImage, userName}) {
     const [currentUser, setCurrentUser] = React.useState(useContext(AuthContext));
     console.log(currentUser);
     const mediumWithNotes = booksArticles.filter( (medium) => medium.notes );
@@ -29,12 +28,12 @@ function ProfileAvatar({booksArticles, books, articles}) {
                 <div className="flex flex-row content-center justify-center pt-10">
                     <div className="flex flex-col">
                         <Avatar 
-                            alt="Kai Schäfer" 
-                            src={Kai} 
+                            alt={userName} 
+                            src={userImage} 
                             className="self-center"
                             style={{margin: '2em 0px 0px 0px ', padding: 0,  boxShadow: '0 10px 10px -5px', width: '100px', height: '100px'}}
                         />
-                        <h1 className="text-xl pt-6 font-semibold text-center">Kai Schäfer</h1>
+                        <h1 className="text-xl pt-6 font-semibold text-center">{userName}</h1>
                         <h2 className="text-md pt-2 text-center">{currentUser.currentUser.ac.email}</h2>
                     </div>
                 </div>

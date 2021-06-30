@@ -1,25 +1,26 @@
 {
-  "short_name": "Noteshelf",
-  "name": "Noteshelf App",
+  "short_name": "Thought Collector",
+  "name": "Thought Collector - Alle deine Notizen auf einem Blick",
+  "description": "Thought Collector ist deine App für all deine Notizen. Egal zu welcher Lektüre zu Gedanken festhalten willst, Thought Collector speichert sie übersichtlich und hilft dir bei der Organisation",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "./icon.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
     {
-      "src": "icon.png",
+      "src": "./icon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "icon.png",
+      "src": "./icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#3B82F6",
+  "background_color": "#3B82F6"
 }

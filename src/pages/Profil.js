@@ -4,7 +4,7 @@ import ProfileFriends from '../components/ProfileFriends'
 import Settings from '../components/Settings'
 
 function Profil({booksArticles, books, articles, userImage, userName}) {
-    document.title = "Noteshelf -  Mein Profil";
+    document.title = "Thought Collector -  Mein Profil";
     console.log(books);
 
     

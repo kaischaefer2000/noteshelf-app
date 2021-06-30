@@ -3,7 +3,7 @@ import FavoriteShelf from '../components/FavoriteShelf'
 
 
 function Favoriten({booksArticles}) {
-    document.title = "Noteshelf -  Meine Favoriten"
+    document.title = "Thought Collector -  Meine Favoriten"
 
   return (
     <>

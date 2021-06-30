@@ -2,7 +2,7 @@ import React from 'react'
 import {TodoList} from "../components/test"
 
 function TestPage() {
-    document.title = "Noteshelf -  Mein Test"
+    document.title = "Thought Collector -  Mein Test"
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React from 'react'
 import NoteView from '../components/NoteView'
 
 function SingleNote() {
-  document.title = "Noteshelf -  Meine Notizen"
+  document.title = "Thought Collector -  Meine Notizen"
 
   return (
     <>

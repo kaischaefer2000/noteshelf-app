@@ -63,9 +63,6 @@ const currentNote = useRecoilValue(clickedNote)
 
     const classesTwo = useStylesTwo();
 
-    window.onbeforeunload = function() {
-        return "Das Neu Laden dieser Seite fuhrt zu einem Fehler! Bitte Abbrechen.";
-    }
   
   return (
     <>

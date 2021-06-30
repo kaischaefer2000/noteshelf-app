@@ -4,15 +4,45 @@ import Fab from '@material-ui/core/Fab';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import { useRecoilValue } from 'recoil';
 import { clickedArticle } from './Articleshelf'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import firebase from '../Firebase'
+import { useHistory } from 'react-router-dom';
 
 
-export default function Articlenotes({notes}) {
+export default function Articlenotes({notes, userName, booksArticles}) {
     const reading = useRecoilValue(clickedArticle)
     const selectedArticles = notes.filter((medium) => (medium.title === reading))
      if(selectedArticles.length != 0){
         var selectedArticleNotes = selectedArticles[0].notes    
     }
 
+    let history = useHistory();
+
+    const onDelete = () => {
+        const db = firebase.firestore()
+        var bookRef = db.collection("user").doc(userName)
+        bookRef.update({
+            readings: booksArticles.filter(read => read.title !== reading)
+        })
+        .catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+        history.push('/artikel')
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+      const handleClose = () => {
+      setOpen(false);
+    //   setRerender(value => value + 1)
+    };
     
   return (
       <>
@@ -21,6 +51,7 @@ export default function Articlenotes({notes}) {
                 <ImportContactsIcon/>
                 <h1 style={{padding: '1em', fontSize: '1rem'}}>{reading}</h1>
             </Fab>
+            <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Artikel löschen</u></p>
             {(() => {
                switch (selectedArticleNotes.length) {
                   case 0:
@@ -46,7 +77,16 @@ export default function Articlenotes({notes}) {
                         )
                }
            
-            })()}      
+            })()}
+
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Möchstest du den Artikel "{reading}" wirklich löschen?</DialogTitle>
+                <DialogActions>
+                    <Button  onClick={() => {handleClose(); onDelete()}} color="primary">
+                      JA!
+                    </Button>
+                  </DialogActions>
+            </Dialog>      
         </div>
       </>
   );

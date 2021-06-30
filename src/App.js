@@ -19,6 +19,8 @@ import { AuthProvider} from "./Auth"
 import PrivateRoute from './PrivateRoute'
 import SignUpp from './pages/SignUp'
 import LogIn from './pages/LogIn'
+import { useRecoilValue } from 'recoil';
+import { rerenderAtom } from './components/FooterNavigation'
 
 
 import {
@@ -190,13 +192,18 @@ import {
 //   },
 // ]
 
+ 
 
 function App() {
-    document.title = "Noteshelf -  Meine Bücher"
+    document.title = "Thought Collector -  Meine Bücher"
+
+    const rerenderValue = useRecoilValue(rerenderAtom)
 
     const [booksArticles, setBooksArticles] = React.useState([])
     const [userImage, setUserImage] = React.useState(null)
     const [userName, setUserName] = React.useState(null)
+
+
 
     React.useEffect(() => {
       const fetchData = async () =>{
@@ -207,9 +214,9 @@ function App() {
         const daten2 = daten.filter(d => (d.email == user.email))
         const daten3 = daten2.map(i => i.readings)
         setBooksArticles(daten3[0])
-        console.log(daten2)
         setUserImage(daten2[0].image)
         setUserName(daten2[0].name)
+        console.log(daten2[0])
       }
       fetchData()
     }, [])
@@ -235,15 +242,15 @@ function App() {
     
 
   return (
+    
     <AuthProvider>
     <Router>
-        <div className="container">
+
           <RecoilRoot>
             <Switch>
-
               <PrivateRoute path="/" exact>
                 <Header title="Meine Bücher" userImage={userImage}/>
-                <Bookshelf books={books} />
+                <Bookshelf books={books} rerenderValue={rerenderValue}/>
               </PrivateRoute>
 
               <Route path="/artikel" component={Artikel}>
@@ -258,12 +265,12 @@ function App() {
 
               <Route path="/buch" component={SingleBook}>
                 <Header title="Meine Notizen" userImage={userImage}/>
-                <Booknotes notes={books}/>
+                <Booknotes notes={books} userName={userName} booksArticles={booksArticles}/>
               </Route>
 
               <Route path="/artikel-notizen" component={SingleArticle}>
                 <Header title="Meine Notizen" userImage={userImage}/>
-                <Articlenotes notes={booksArticles}/>
+                <Articlenotes notes={booksArticles} userName={userName} booksArticles={booksArticles}/>
               </Route>
 
               <Route path="/notiz" component={SingleNote}>
@@ -294,8 +301,8 @@ function App() {
             </Switch>
             </RecoilRoot>
             
-          <FooterNavigation booksArticles={booksArticles}/>
-        </div>
+          <FooterNavigation booksArticles={booksArticles} userName={userName} />
+       
     </Router>
     </AuthProvider>
   );

@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="The Noteshelf is an app to have all your learnings and notes stored and organized in one application"
+      content="The ThoughtCollector is an app to have all your learnings and notes stored and organized in one application"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon.png" />
     <!--
@@ -18,11 +18,15 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
-    <title>Noteshelf</title>
+    <title>Thought Collector</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    
+    <script type="text/javascript">
+      window.onbeforeunload = function () {
+        return "Das Refreshen der Seite führt zu einem Fehler. Bitte navigiere über das Menü zu deiner Wunschseite.";
+      }
+    </script>
   </body>
 </html>

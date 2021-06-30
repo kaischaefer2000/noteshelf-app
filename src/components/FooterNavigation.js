@@ -24,12 +24,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {useLocation} from 'react-router-dom'
+import {useLocation} from 'react-router-dom';
+import { LoopCircleLoading	 } from 'react-loadingg';
+import { atom, useRecoilState } from 'recoil';
+
+  export const rerenderAtom = atom({
+    key: "rerenderAtom",
+    default: 0,
+  })
 
 
 
 
-const FooterNavigation = ({booksArticles}) => {
+const FooterNavigation = ({booksArticles, userName}) => {
+
+    const [rerender, setRerender] = useRecoilState(rerenderAtom);
 
     const { currentUser } = useContext(AuthContext);
 
@@ -68,14 +77,20 @@ const FooterNavigation = ({booksArticles}) => {
 
     const handleClose = () => {
       setOpen(false);
+      setRerender(value => value + 1)
     };
 
+    const [test, setTest] = React.useState("none")
+
+
     const onFileChange = async (e) => {
+      setTest('inherit')
       const file = e.target.files[0]
       const storageRef = firebase.storage().ref()
       const fileRef = storageRef.child(file.name)
       await fileRef.put(file)
       setFileUrl(await fileRef.getDownloadURL())
+      setTest('none')
       console.log("onFileChange ausgeführt", fileUrl, fileRef)
     }
 
@@ -87,22 +102,16 @@ const FooterNavigation = ({booksArticles}) => {
 
     const onCreate = () => {
         const db = firebase.firestore()
-        console.log("oncreate ausgeführt (vor)", fileUrl)
-        db.collection("books").add({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
-        console.log("oncreate ausgeführt (nach)", fileUrl)
-
-        const b1 = booksArticles.filter((b) => b.title == title)
-        const b2 = b1[0]
-        console.log(b2)
-        var noteRef = db.collection("books").doc(title).set({author: b2.author, isBook: b2.isBook, notes: b2.notes, pages: b2.pages, title: b2.title})
-        console.log(noteRef)
-
+        // db.collection("books").add({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
+        var bookRef = db.collection("user").doc(userName)
+        bookRef.update({
+          readings: firebase.firestore.FieldValue.arrayUnion({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
+        })
         setTitle(null)
         setAuthor(null)
         setPages(null)
         setGenre(null)
     }
-
 
 
 
@@ -113,11 +122,15 @@ const FooterNavigation = ({booksArticles}) => {
 
     const onACreate = () => {
         const db = firebase.firestore()
-        db.collection("books").add({title: Atitle, author: Aauthor, pages: Apages, link: Alink, isBook: false, notes: []})
+        var articleRef = db.collection("user").doc(userName)
+        articleRef.update({
+          readings: firebase.firestore.FieldValue.arrayUnion({title: Atitle, author: Aauthor, pages: Apages, link: Alink, isBook: false, notes: []})
+        })
         setATitle(null)
         setAAuthor(null)
         setAPages(null)
         setALink(null)
+
     }
 
 
@@ -132,10 +145,15 @@ const FooterNavigation = ({booksArticles}) => {
 
     const onCreateNote = () => {
         const db = firebase.firestore()
-        var noteRef = db.collection("books").doc(bookRef)
-        noteRef.update({
-          notes: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
-        })
+        // noteRef.update({
+        //   notes: firebase.firestore.FieldValue.arrayUnion({})
+        // })
+        var noteRef = db.collection("user").doc(userName)
+        console.log(noteRef)
+        // noteRef.update({
+        //  readings: firebase.firestore.FieldValue.arrayRemove({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
+        //  readings: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
+        // })
         
         
         console.log(noteHeading, bookRef, noteText, noteTags, notePages, isFavorite)
@@ -156,6 +174,9 @@ const FooterNavigation = ({booksArticles}) => {
         setPath(pathName)
       }
     }
+
+
+    
 
     
     usePathname()
@@ -314,6 +335,7 @@ const FooterNavigation = ({booksArticles}) => {
                                 <Button  onClick={() => {handleClose(); onCreate()}} color="primary">
                                   Speichern
                                 </Button>
+                                <LoopCircleLoading style={{display: test, right: "50%", bottom: "15%", position: "absolute"}}/>
                               </DialogActions>
                             </>
                       )

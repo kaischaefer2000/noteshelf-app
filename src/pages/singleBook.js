@@ -3,7 +3,7 @@ import Booknotes from "../components/BookNotes"
 
 
 function SingleBook({booknotes}) {
-  document.title = "Noteshelf -  Meine Notizen"
+  document.title = "Thought Collector -  Meine Notizen"
   return (
     <div>
         <Booknotes booknotes={booknotes}/>

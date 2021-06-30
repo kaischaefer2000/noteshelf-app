@@ -9,13 +9,12 @@ import firebase from '../Firebase'
     default: "Der Alchimist",
   })
 
-export default function Bookshelf({books}) {
+export default function Bookshelf({books, rerenderValue}) {
   function navigateToNotes(newValue){
       setActiveBook(newValue);
   };
 
   const [activeBook, setActiveBook] = useRecoilState(clickedBook);
-
 
   return (
     <div className="pt-14 min-h-screen bg-gradient-to-r from-purple-50 to-purple-100 pb-14 mb-5">
@@ -32,7 +31,6 @@ export default function Bookshelf({books}) {
                    <Link to="/buch">
                   <div onClick={() => navigateToNotes(actBook)} style={{zIndex: '999'}}>
                     <Book book={book}/>
-                    {console.log(book)}
                   </div>
                   </Link>
                   </>

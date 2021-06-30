@@ -3,12 +3,44 @@ import Note from './Note';
 import Fab from '@material-ui/core/Fab';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import { useRecoilValue } from 'recoil';
-import { clickedBook } from './Bookshelf'
+import { clickedBook } from './Bookshelf';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import firebase from '../Firebase'
+import { useHistory } from 'react-router-dom';
 
 
-export default function Booknotes({notes}) {
+
+export default function Booknotes({notes, userName, booksArticles}) {
     const reading = useRecoilValue(clickedBook)
     console.log(reading)
+
+    let history = useHistory();
+
+    const onDelete = () => {
+        const db = firebase.firestore()
+        var bookRef = db.collection("user").doc(userName)
+        bookRef.update({
+            readings: booksArticles.filter(read => read.title !== reading)
+        })
+        .catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+        history.push('/')
+    };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+      const handleClose = () => {
+      setOpen(false);
+    //   setRerender(value => value + 1)
+    };
     
     const selectedBooks = notes.filter((medium) => (medium.title === reading))
     console.log(selectedBooks)
@@ -17,12 +49,8 @@ export default function Booknotes({notes}) {
         console.log(selectedBookNotes, 'nicht 0')
     }
 
-    console.log(selectedBookNotes.length)
+    // console.log(selectedBookNotes.length)
 
-    window.onbeforeunload = function() {
-        return "Das Neu Laden dieser Seite fuhrt zu einem Fehler! Bitte Abbrechen.";
-    }
-    
     
     
   return (
@@ -32,6 +60,7 @@ export default function Booknotes({notes}) {
                 <ImportContactsIcon/>
                 <h1 style={{padding: '1em', fontSize: '1rem'}}>{reading}</h1>
             </Fab>
+            <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Buch löschen</u></p>
             {(() => {
                if(selectedBookNotes.length > 0) {
                   
@@ -58,7 +87,17 @@ export default function Booknotes({notes}) {
                     }
                }
            
-            )()}      
+            )()}    
+            
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Möchstest du das Buch "{reading}" wirklich löschen?</DialogTitle>
+                <DialogActions>
+                    <Button  onClick={() => {handleClose(); onDelete()}} color="primary">
+                      JA!
+                    </Button>
+                  </DialogActions>
+            </Dialog>
+                                
         </div>
       </>
   );

@@ -1,12 +1,9 @@
 NotizView: Notiz kann gelöscht werden. Notiz kann bearbeitet werden.
-Buch / Artikel löschen.
-Bilder bei Adden von Büchern werden manchmal nicht angezeigt.
 Bei Klick auf das Herz von Notizen werden die Daten verändert und isFavorite steht auf true ( in Note ist ein Versuch, jedoch ist das sehr schwer das Object in dem Notes Array anzusteuern und da isFavorite auf true zu setzen... Firebase bietet dazu leider keine Funktion an. Es müssste besser über Fremdschlüssel gemacht werden von Collectio Notes zu Books https://stackoverflow.com/questions/46757614/how-to-update-an-array-of-objects-with-firestore)
 
 
 
 Zweitrangig:
-- Inhalte werden basierend auf den User angezeigt
 - Profil ändern
 - Freunde hinzufügen
 - Beim Hinzufügen von Notes kann man nur einen Tag setzen
@@ -85,4 +82,8 @@ Gewünscht:
         const book2 = book1[0]
         console.log(book2)
         var noteRef = db.collection("books").doc("Qualitative Forschung").set({author: book2.author, isBook: book2.isBook, notes: book2.notes, pages: book2.pages, title: book2.title, link: book2.link})
+        console.log(noteRef)
+
+
+  BZW:   var noteRef = db.collection("user").doc(userName).set({email: transfer.email, image: transfer.image, readings: transfer.readings, name: transfer.name})
         console.log(noteRef)

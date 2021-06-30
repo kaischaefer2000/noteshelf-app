@@ -4,7 +4,7 @@ import TagList from '../components/TagList'
 
 
 export default function Stichwort({booksArticles}) {
-    document.title = "Noteshelf -  Meine Stichwörter"
+    document.title = "Thought Collector -  Meine Stichwörter"
 
   return (
     <>

@@ -3,7 +3,7 @@ import Articleshelf from "../components/Articleshelf"
 
 
 function Artikel({articles}) {
-  document.title = "Noteshelf -  Meine Artikel"
+  document.title = "Thought Collector -  Meine Artikel"
   return (
     <div>
       <Articleshelf articles={articles} />

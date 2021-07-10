@@ -6,7 +6,7 @@ Bei Klick auf das Herz von Notizen werden die Daten verändert und isFavorite st
 Zweitrangig:
 - Profil ändern
 - Freunde hinzufügen
-- Beim Hinzufügen von Notes kann man nur einen Tag setzen
+- Beim Hinzufügen von Notes kann man nur einen Tag setzen 
 
 
 
@@ -85,5 +85,29 @@ Gewünscht:
         console.log(noteRef)
 
 
-  BZW:   var noteRef = db.collection("user").doc(userName).set({email: transfer.email, image: transfer.image, readings: transfer.readings, name: transfer.name})
-        console.log(noteRef)
+  BZW:   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        TODO-List Endspurt
+
+        - Notiz löschen
+        - Notiz bearbeiten
+        - Favorit toggle
+        - PWA
+
+        - Notiz anlegen bei einem Buch rendert nicht direkt
+        - Artikel Seite Bug
+        - Artikel löschen
+        - Registrierung geht nicht richtig

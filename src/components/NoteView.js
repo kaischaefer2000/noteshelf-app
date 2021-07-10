@@ -10,16 +10,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import CommentIcon from '@material-ui/icons/Comment';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import firebase from '../Firebase'
+import { useHistory } from 'react-router-dom';
 
-export default function NoteView({booksArticles}) {
+export default function NoteView({booksArticles, userMail}) {
 
-const currentNote = useRecoilValue(clickedNote)
+  const currentNote = useRecoilValue(clickedNote)
+  const [note, setNote] = React.useState({});
 
-    const mediumWithNotes = booksArticles.filter( (medium) => medium.notes );
+  let history = useHistory();
+
+  const [open, setOpen] = React.useState(false);
+
+  const mediumWithNotes = booksArticles.filter( (medium) => medium.notes );
 
     
 
-    const mediumNotes = [];
+    let mediumNotes = [];
     mediumWithNotes.forEach(fav => {
         const favoriteNotes = fav.notes;
         favoriteNotes.forEach(note => {
@@ -27,25 +38,51 @@ const currentNote = useRecoilValue(clickedNote)
         })
     });
     
-    console.log(currentNote)
-    console.log(booksArticles)
-    const noteArray = mediumNotes.filter( (nt) => nt.title == currentNote );
-    console.log(noteArray)
-    const note = noteArray[0]
+    React.useEffect(()=>{
+        const usedNote = mediumNotes.find( (nt) => nt.title == currentNote );
 
-    console.log(note)
+        if(usedNote !== undefined){
+            setNote(usedNote)
+        }
+    }, [currentNote])
 
-    const [favorited, setFavorited] = React.useState(note.isFavorite);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+
+    const handleClose = () => {
+      setOpen(false);
+    //   setRerender(value => value + 1)
+    };
+    
+    const onDelete = () => {
+        const db = firebase.firestore()
+        console.log(userMail)
+        const noteRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+        noteRef.update({
+        //   notes: firebase.firestore.FieldValue.arrayRemove(currentNote)
+        })
+        console.log(note.book)
+        history.push('/')
+    };
 
      const favoritedtotrue = () => {
-         setFavorited(true);
+         setNote({
+           ...note,
+           isFavorite: true
+         })
      };
 
      const favoritedtofalse = () => {
-         setFavorited(false);
+         setNote({
+           ...note,
+           isFavorite: false
+         })
      };
 
-     const tags = note.tags
+    
      const useStylesTwo = makeStyles((theme) => ({
       root: {
         display: 'flex',
@@ -70,23 +107,23 @@ const currentNote = useRecoilValue(clickedNote)
             <div className="flex flex-row w-full">
                 <Fab variant="extended" style={{margin: '1.5em 1em 0em 1em', backgroundColor:'#A7F3D0'}} >
                     <CommentIcon/>
-                    <h1 className="tracking-wider font-medium text-lg px-3">{note.title}</h1>
+                    <h1 className="tracking-wider font-medium text-lg px-3">{note && note.title}</h1>
                 </Fab>
             </div>
-            <DeleteIcon className="cursor-pointer z-10 absolute mt-9 right-5"/>
+            <DeleteIcon onClick={handleClickOpen} className="cursor-pointer z-10 absolute mt-9 right-5"/>
             <EditIcon className="cursor-pointer z-10 absolute mt-9 right-12"/>
-            {(favorited == true ? <a  onClick={( () => {favoritedtofalse();})}><FavoriteIcon className="z-10 absolute mt-9 right-20 cursor-pointer"/></a> 
+            {(note && note.isFavorite == true ? <a  onClick={( () => {favoritedtofalse();})}><FavoriteIcon className="z-10 absolute mt-9 right-20 cursor-pointer"/></a> 
             : <a  onClick={( () => {favoritedtotrue();})}><FavoriteBorderIcon className="cursor-pointer z-10 absolute mt-9 right-20"/></a>)}
 
             <div className="bg-white m-3 p-5">
-                <p className="text-l text-gray-600">{note.book} (S. {note.pages})</p>
+                <p className="text-l text-gray-600">{note && note.book} (S. {note && note.pages})</p>
                 <br></br>
-                <p>{note.text}</p>
+                <p>{note && note.text}</p>
                 
             </div>
 
             <Paper component="ul" className={classesTwo.root}>
-              {tags.map((data) => {
+              { note && note.tags && note.tags.map((data) => {
               
                 return (
                   <li>
@@ -99,6 +136,14 @@ const currentNote = useRecoilValue(clickedNote)
               })}
             </Paper>
             
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Möchstest du die Notiz "{currentNote}" wirklich löschen?</DialogTitle>
+                <DialogActions>
+                    <Button  onClick={() => {handleClose(); onDelete()}} color="primary">
+                      JA!
+                    </Button>
+                  </DialogActions>
+            </Dialog>
         </div>
     </>
 

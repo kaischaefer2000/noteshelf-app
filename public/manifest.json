@@ -4,17 +4,17 @@
   "description": "Thought Collector ist deine App für all deine Notizen. Egal zu welcher Lektüre zu Gedanken festhalten willst, Thought Collector speichert sie übersichtlich und hilft dir bei der Organisation",
   "icons": [
     {
-      "src": "./icon.png",
+      "src": "https://firebasestorage.googleapis.com/v0/b/noteshelf-app-new.appspot.com/o/icon.png?alt=media&token=7ed3a3f7-9db1-4b74-b79f-2fcd23bde95a",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
     {
-      "src": "./icon.png",
+      "src": "https://firebasestorage.googleapis.com/v0/b/noteshelf-app-new.appspot.com/o/icon.png?alt=media&token=7ed3a3f7-9db1-4b74-b79f-2fcd23bde95a",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./icon.png",
+      "src": "https://firebasestorage.googleapis.com/v0/b/noteshelf-app-new.appspot.com/o/icon.png?alt=media&token=7ed3a3f7-9db1-4b74-b79f-2fcd23bde95a",
       "type": "image/png",
       "sizes": "512x512"
     }

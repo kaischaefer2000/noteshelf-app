@@ -26,19 +26,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {useLocation} from 'react-router-dom';
 import { LoopCircleLoading	 } from 'react-loadingg';
-import { atom, useRecoilState } from 'recoil';
-
-  export const rerenderAtom = atom({
-    key: "rerenderAtom",
-    default: 0,
-  })
 
 
 
-
-const FooterNavigation = ({booksArticles, userName}) => {
-
-    const [rerender, setRerender] = useRecoilState(rerenderAtom);
+const FooterNavigation = ({booksArticles}) => {
 
     const { currentUser } = useContext(AuthContext);
 
@@ -77,7 +68,6 @@ const FooterNavigation = ({booksArticles, userName}) => {
 
     const handleClose = () => {
       setOpen(false);
-      setRerender(value => value + 1)
     };
 
     const [test, setTest] = React.useState("none")
@@ -102,11 +92,21 @@ const FooterNavigation = ({booksArticles, userName}) => {
 
     const onCreate = () => {
         const db = firebase.firestore()
-        // db.collection("books").add({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
-        var bookRef = db.collection("user").doc(userName)
-        bookRef.update({
-          readings: firebase.firestore.FieldValue.arrayUnion({title: title, author: author, pages: pages, genre: genre, isBook: true, image: fileUrl, notes: []})
+        let userMail = firebase.auth().currentUser;
+        // db.collection("books").add()
+         var book = db.collection("user").doc(userMail.email).collection("readings").doc(title)
+        book.set({
+            title: title,
+            author: author, 
+            pages: pages, 
+            genre: genre, 
+            isBook: true, 
+            image: fileUrl, 
+            notes: []
         })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
         setTitle(null)
         setAuthor(null)
         setPages(null)
@@ -122,10 +122,19 @@ const FooterNavigation = ({booksArticles, userName}) => {
 
     const onACreate = () => {
         const db = firebase.firestore()
-        var articleRef = db.collection("user").doc(userName)
-        articleRef.update({
-          readings: firebase.firestore.FieldValue.arrayUnion({title: Atitle, author: Aauthor, pages: Apages, link: Alink, isBook: false, notes: []})
+        let userEmail = firebase.auth().currentUser;
+        var book = db.collection("user").doc(userEmail.email).collection("readings").doc(Atitle)
+        book.set({
+            title: Atitle, 
+            author: Aauthor, 
+            pages: Apages, 
+            link: Alink, 
+            isBook: false, 
+            notes: []
         })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
         setATitle(null)
         setAAuthor(null)
         setAPages(null)
@@ -145,15 +154,12 @@ const FooterNavigation = ({booksArticles, userName}) => {
 
     const onCreateNote = () => {
         const db = firebase.firestore()
-        // noteRef.update({
-        //   notes: firebase.firestore.FieldValue.arrayUnion({})
-        // })
-        var noteRef = db.collection("user").doc(userName)
+        let userEmailAdress = firebase.auth().currentUser;
+        var noteRef = db.collection("user").doc(userEmailAdress.email).collection("readings").doc(bookRef)
+        noteRef.update({
+         notes: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
+        })
         console.log(noteRef)
-        // noteRef.update({
-        //  readings: firebase.firestore.FieldValue.arrayRemove({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
-        //  readings: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
-        // })
         
         
         console.log(noteHeading, bookRef, noteText, noteTags, notePages, isFavorite)

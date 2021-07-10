@@ -5,14 +5,13 @@ import Settings from '../components/Settings'
 
 function Profil({booksArticles, books, articles, userImage, userName}) {
     document.title = "Thought Collector -  Mein Profil";
-    console.log(books);
 
     
 
   return (
     <div className="pb-14">
         <ProfileAvatar booksArticles={booksArticles} books={books} articles={articles} userImage={userImage} userName={userName}/>
-        <ProfileFriends/>
+         {(userName && userName == "Kai Schäfer" ? <ProfileFriends/> : "" )}
         <Settings/>
     </div>
   );

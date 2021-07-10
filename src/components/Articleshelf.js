@@ -10,6 +10,7 @@ export const clickedArticle = atom({
 
 
 export default function Articleshelf({articles}) {
+  
     const [activeA, setActiveA] = React.useState('default');
     function navigateToANotes(newAValue){
       setActiveA(newAValue);

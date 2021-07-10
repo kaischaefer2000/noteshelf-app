@@ -28,7 +28,6 @@ export default function Booknotes({booksArticles}) {
             {
                 favorites.map((note) => {
                     const noteBook = books.filter((book) => (book.title === note.book));
-                    console.log(noteBook)
                     return(
                         <Note note={note} book={noteBook}/>
                     )

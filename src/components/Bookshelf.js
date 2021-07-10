@@ -2,18 +2,17 @@ import React, {useContext} from 'react';
 import Book from './Book';
 import {Link} from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
-import firebase from '../Firebase'
+import { useRecoilValue } from 'recoil';
+import { dataA} from '../App';
+
 
   export const clickedBook = atom({
     key: "clickedBook",
-    default: "Der Alchimist",
+    default: "",
   })
 
-export default function Bookshelf({books, rerenderValue}) {
-  function navigateToNotes(newValue){
-      setActiveBook(newValue);
-  };
-
+export default function Bookshelf({books}) {
+ 
   const [activeBook, setActiveBook] = useRecoilState(clickedBook);
 
   return (
@@ -25,14 +24,13 @@ export default function Bookshelf({books, rerenderValue}) {
 
         {
             books.map((book) => {
-              const actBook = book.title;
                 return(
-                  <>
-                   <Link to="/buch">
-                  <div onClick={() => navigateToNotes(actBook)} style={{zIndex: '999'}}>
-                    <Book book={book}/>
-                  </div>
-                  </Link>
+                  <>  
+                    <div id={book.title} onClick={(e) => setActiveBook(e.currentTarget.id)} style={{zIndex: '99'}}>
+                      <Link to="/buch">
+                        <Book book={book}/>
+                      </Link>
+                    </div>
                   </>
                 )
             })

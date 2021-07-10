@@ -104,9 +104,8 @@ export default function TagShelf({booksArticles}) {
         
             <div className={`mt-3 ${classes.root}`}>
               {uniqueTags.map( tag => {
-                const activeTag = tag;
                   return(  
-                  <div onClick={() => {navigateToNotes(activeTag); renderNotes();}} style={{zIndex: '40'}}>
+                  <div id={tag} onClick={(e) => {navigateToNotes(e.currentTarget.id); renderNotes();}} style={{zIndex: '40'}}>
                     <Chip
                       icon={<LocalOfferIcon/>}
                       label={tag}

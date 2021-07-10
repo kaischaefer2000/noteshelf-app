@@ -12,26 +12,26 @@ import firebase from '../Firebase'
 import { useHistory } from 'react-router-dom';
 
 
-
-export default function Booknotes({notes, userName, booksArticles}) {
-    const reading = useRecoilValue(clickedBook)
+export default function Booknotes({userMail, books}) {
+    var reading = useRecoilValue(clickedBook)
     console.log(reading)
 
     let history = useHistory();
 
     const onDelete = () => {
         const db = firebase.firestore()
-        var bookRef = db.collection("user").doc(userName)
-        bookRef.update({
-            readings: booksArticles.filter(read => read.title !== reading)
-        })
-        .catch(function(error) {
+        console.log(reading, userMail)
+        db.collection("user").doc(userMail).collection("readings").doc(reading).delete().then(() => {
+            console.log("Document successfully deleted!");
+        }).catch((error) => {
             console.error("Error removing document: ", error);
         });
         history.push('/')
     };
 
     const [open, setOpen] = React.useState(false);
+    const [selectedBookNotes, setSelectedBookNotes] = React.useState([]);
+
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -41,16 +41,16 @@ export default function Booknotes({notes, userName, booksArticles}) {
       setOpen(false);
     //   setRerender(value => value + 1)
     };
-    
-    const selectedBooks = notes.filter((medium) => (medium.title === reading))
-    console.log(selectedBooks)
-    if(selectedBooks.length != 0){
-        var selectedBookNotes = selectedBooks[0].notes    
-        console.log(selectedBookNotes, 'nicht 0')
-    }
 
-    // console.log(selectedBookNotes.length)
 
+    React.useEffect(()=>{
+        const selectedBook = books.find((medium) => (medium.title === reading))
+        if(selectedBook !== undefined){
+            setSelectedBookNotes(selectedBook.notes)
+        }
+    }, [reading])
+            
+        
     
     
   return (
@@ -61,33 +61,16 @@ export default function Booknotes({notes, userName, booksArticles}) {
                 <h1 style={{padding: '1em', fontSize: '1rem'}}>{reading}</h1>
             </Fab>
             <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Buch löschen</u></p>
-            {(() => {
-               if(selectedBookNotes.length > 0) {
-                  
-                      return (
-                        <>
-                            {
-                                selectedBookNotes.map((note) => {
-                                    return(
-                                        <Note note={note}/>
-                                    )
-                                })
-                            }
-                        </>
-                      )}
-                      
-                  else{
-                        return (
-                            <>
-                            <div className="m-3 bg-gray-200	">
-                                <h2 className="p-5 align-center ">Für diese Lektüre sind noch keine Notizen vorhanden! Gehe auf das +, um neue Notizen hinzuzufügen</h2>
-                            </div>
-                        </>
+                {console.log(reading)}
+
+            {
+                selectedBookNotes && selectedBookNotes.map((note) => {
+                        return(
+                            <Note note={note}/>
                         )
-                    }
-               }
-           
-            )()}    
+                    })
+            }
+              
             
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Möchstest du das Buch "{reading}" wirklich löschen?</DialogTitle>

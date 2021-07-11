@@ -92,8 +92,6 @@ function App() {
             setReader(newUser)
         })
     }, [benutzer])
-
-    console.log(reader)
    
 
   // var num = 0
@@ -177,7 +175,7 @@ function App() {
 
               <Route path="/artikel-notizen" component={SingleArticle}>
                 <Header title="Meine Notizen" userImage={userImage}/>
-                <Articlenotes notes={lectures} userName={userName} booksArticles={lectures}/>
+                <Articlenotes notes={lectures} userMail={userMail} articles={articles}/>
               </Route>
 
               <Route path="/notiz" component={SingleNote}>

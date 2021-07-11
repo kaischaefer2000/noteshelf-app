@@ -12,28 +12,29 @@ import firebase from '../Firebase'
 import { useHistory } from 'react-router-dom';
 
 
-export default function Articlenotes({notes, userName, booksArticles}) {
+export default function Articlenotes({notes, userMail, articles}) {
     const reading = useRecoilValue(clickedArticle)
-    const selectedArticles = notes.filter((medium) => (medium.title === reading))
-     if(selectedArticles.length != 0){
-        var selectedArticleNotes = selectedArticles[0].notes    
-    }
 
     let history = useHistory();
 
     const onDelete = () => {
+      
+        // bookRef.update({
+        //     readings: articles.filter(read => read.title !== reading)
+        // })
+
         const db = firebase.firestore()
-        var bookRef = db.collection("user").doc(userName)
-        bookRef.update({
-            readings: booksArticles.filter(read => read.title !== reading)
-        })
-        .catch(function(error) {
+
+        db.collection("user").doc(userMail).collection("readings").doc(reading).delete().then(() => {
+            console.log("Document successfully deleted!");
+        }).catch((error) => {
             console.error("Error removing document: ", error);
         });
-        history.push('/artikel')
+        history.push('/')
     };
 
     const [open, setOpen] = React.useState(false);
+    const [selectedArticleNotes, setSelectedArticleNotes] = React.useState([]);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -43,6 +44,13 @@ export default function Articlenotes({notes, userName, booksArticles}) {
       setOpen(false);
     //   setRerender(value => value + 1)
     };
+
+    React.useEffect(()=>{
+        const selectedArticle = articles.find((medium) => (medium.title === reading))
+        if(selectedArticle !== undefined){
+            setSelectedArticleNotes(selectedArticle.notes)
+        }
+    }, [reading])
     
   return (
       <>
@@ -53,7 +61,7 @@ export default function Articlenotes({notes, userName, booksArticles}) {
             </Fab>
             <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Artikel löschen</u></p>
             {(() => {
-               switch (selectedArticleNotes.length) {
+               switch (selectedArticleNotes && selectedArticleNotes.length) {
                   case 0:
                       return (
                         <>
@@ -67,7 +75,7 @@ export default function Articlenotes({notes, userName, booksArticles}) {
                         return (
                             <>
                             {
-                                selectedArticleNotes.map((note) => {
+                                selectedArticleNotes && selectedArticleNotes.map((note) => {
                                     return(
                                         <Note note={note}/>
                                     )

@@ -14,7 +14,6 @@ import { useHistory } from 'react-router-dom';
 
 export default function Booknotes({userMail, books}) {
     var reading = useRecoilValue(clickedBook)
-    console.log(reading)
 
     let history = useHistory();
 

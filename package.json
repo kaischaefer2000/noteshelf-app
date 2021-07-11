@@ -39,6 +39,22 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4"
   },
+  "devDependencies": {
+    "firestore-export-import": "^0.15.0"
+  },
+
+  "description": "Technologies used: Tailwind CSS, Create React App, ...",
+  "main": "UploadData.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaischaefer2000/noteshelf-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaischaefer2000/noteshelf-app/issues"
+  },
+  "homepage": "https://github.com/kaischaefer2000/noteshelf-app#readme",
   "scripts": {
     "build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css",
     "watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/tailwind.output.css -c 'npm run build:tailwind'",

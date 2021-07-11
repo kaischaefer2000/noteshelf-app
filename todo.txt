@@ -1,14 +1,6 @@
-NotizView: Notiz kann gelöscht werden. Notiz kann bearbeitet werden.
-Bei Klick auf das Herz von Notizen werden die Daten verändert und isFavorite steht auf true ( in Note ist ein Versuch, jedoch ist das sehr schwer das Object in dem Notes Array anzusteuern und da isFavorite auf true zu setzen... Firebase bietet dazu leider keine Funktion an. Es müssste besser über Fremdschlüssel gemacht werden von Collectio Notes zu Books https://stackoverflow.com/questions/46757614/how-to-update-an-array-of-objects-with-firestore)
-
-
-
 Zweitrangig:
-- Profil ändern
 - Freunde hinzufügen
 - Beim Hinzufügen von Notes kann man nur einen Tag setzen 
-
-
 
 
 Gewünscht:
@@ -16,39 +8,6 @@ Gewünscht:
 - Suchfunktion wo man direkt nach einem Wort in der Notiz suchen kann
 - Notizen exportierbar machen und auch über SM teilen 
 - Notizen zu Online Artikel (Kimberly)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -73,10 +32,6 @@ Gewünscht:
 
 
 
-
-
-
-
   In FooterNavigation, um die uid eines Document in eine eigene umzuändern
   const book1 = booksArticles.filter((book) => book.title == "Qualitative Forschung")
         const book2 = book1[0]
@@ -92,22 +47,7 @@ Gewünscht:
 
 
 
-
-
-
-
-
-
-
-
         TODO-List Endspurt
-
-        - Notiz löschen
-        - Notiz bearbeiten
-        - Favorit toggle
+ 
         - PWA
-
         - Notiz anlegen bei einem Buch rendert nicht direkt
-        - Artikel Seite Bug
-        - Artikel löschen
-        - Registrierung geht nicht richtig

@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
 import firebase from "../Firebase";
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -52,18 +51,32 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SignUp = ({ history }) => {
+
   const classes = useStyles();
+  
   const handleSignUp = useCallback(async event => {
     event.preventDefault();
-    const { email, password } = event.target.elements;
+    const { email, password, name } = event.target.elements;
+    console.log(email.value, password.value, name.value)
+  
     try {
-      await firebase
+      await firebase.firestore().collection("user").doc(email.value).set({
+        email: email.value,
+        image: "",
+        name: name.value
+      })
+
+      firebase
         .auth()
         .createUserWithEmailAndPassword(email.value, password.value);
+
+      
+
       history.push("/");
     } catch (error) {
       alert(error);
     }
+  
   }, [history]);
 
   return (
@@ -100,6 +113,17 @@ const SignUp = ({ history }) => {
             type="password"
             id="password"
             autoComplete="current-password"
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="name"
+            label="Name"
+            type="text"
+            id="name"
           />
           
           <Button

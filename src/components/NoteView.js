@@ -16,6 +16,13 @@ import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from '../Firebase'
 import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import DialogContent from '@material-ui/core/DialogContent';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 export default function NoteView({booksArticles, userMail}) {
 
@@ -25,6 +32,7 @@ export default function NoteView({booksArticles, userMail}) {
   let history = useHistory();
 
   const [open, setOpen] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
 
   const mediumWithNotes = booksArticles.filter( (medium) => medium.notes );
 
@@ -37,6 +45,8 @@ export default function NoteView({booksArticles, userMail}) {
             mediumNotes.push(note);
         })
     });
+
+    const readingNotes = mediumNotes.filter(n => n.book == note.book)
     
     React.useEffect(()=>{
         const usedNote = mediumNotes.find( (nt) => nt.title == currentNote );
@@ -56,20 +66,32 @@ export default function NoteView({booksArticles, userMail}) {
       setOpen(false);
     //   setRerender(value => value + 1)
     };
-    
+
+
+    const handleClickEditOpen = () => {
+      setOpenEdit(true);
+    };
+
+
+    const handleEditClose = () => {
+      setOpenEdit(false);
+    };
+
+
+    console.log(readingNotes)
     const onDelete = () => {
         const db = firebase.firestore()
         console.log(userMail)
         const noteRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
         noteRef.update({
-        //   notes: firebase.firestore.FieldValue.arrayRemove(currentNote)
+          notes: readingNotes.filter(read => read.title !== note.title)
         })
         console.log(note.book)
         history.push('/')
     };
 
      const favoritedtotrue = () => {
-         setNote({
+        setNote({
            ...note,
            isFavorite: true
          })
@@ -82,6 +104,22 @@ export default function NoteView({booksArticles, userMail}) {
          })
      };
 
+    React.useEffect(() => {
+      const db = firebase.firestore()
+      const favRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+      favRef.update({
+        notes: readingNotes.filter(read => read.title !== note.title)
+      })
+      favRef.update({
+        notes: firebase.firestore.FieldValue.arrayUnion(note)
+      })  
+      setNoteHeading(note.title)
+      setNoteText(note.text)
+      setNotePages(note.pages)
+      setBookRef(note.book)
+      setIsFavorite(note.isFavorite)
+      setNoteTags(note.tags)
+    }, [note])
     
      const useStylesTwo = makeStyles((theme) => ({
       root: {
@@ -100,6 +138,28 @@ export default function NoteView({booksArticles, userMail}) {
 
     const classesTwo = useStylesTwo();
 
+
+
+
+    const [noteHeading, setNoteHeading] = React.useState("")
+    const [noteText, setNoteText] = React.useState("")
+    const [notePages, setNotePages] = React.useState("")
+    const [bookRef, setBookRef] = React.useState("")
+    const [isFavorite, setIsFavorite] = React.useState(false)
+    const [noteTags, setNoteTags] = React.useState([])
+
+
+    const onCreateNote = () => {
+        const db = firebase.firestore()
+        var noteRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+        noteRef.update({
+          notes: readingNotes.filter(read => read.title !== note.title)
+        })
+        noteRef.update({
+          notes: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
+        })
+    }
+
   
   return (
     <>
@@ -111,7 +171,8 @@ export default function NoteView({booksArticles, userMail}) {
                 </Fab>
             </div>
             <DeleteIcon onClick={handleClickOpen} className="cursor-pointer z-10 absolute mt-9 right-5"/>
-            <EditIcon className="cursor-pointer z-10 absolute mt-9 right-12"/>
+            <EditIcon onClick={handleClickEditOpen} className="cursor-pointer z-10 absolute mt-9 right-12"/>
+            {console.log('Ausgabe:', note.isFavorite)}
             {(note && note.isFavorite == true ? <a  onClick={( () => {favoritedtofalse();})}><FavoriteIcon className="z-10 absolute mt-9 right-20 cursor-pointer"/></a> 
             : <a  onClick={( () => {favoritedtotrue();})}><FavoriteBorderIcon className="cursor-pointer z-10 absolute mt-9 right-20"/></a>)}
 
@@ -144,6 +205,91 @@ export default function NoteView({booksArticles, userMail}) {
                     </Button>
                   </DialogActions>
             </Dialog>
+
+
+
+              <Dialog open={openEdit} onClose={handleEditClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Hier kannst du ganz einfach deine Notiz bearbeiten</DialogTitle>
+                  <DialogContent>
+  
+                    <InputLabel id="book-ref-label">Lektüre</InputLabel>
+                    <Select
+                      margin="dense"
+                      labelId="book-ref-label"
+                      id="bookRef"
+                      fullWidth
+                      value={bookRef}
+                      // onChange={((e) => {setBookRef(e.target.value)})}
+                    >
+                      {booksArticles.map( (book) => {
+                        return(
+                          <MenuItem value={book.title}>{book.title}</MenuItem>
+                        )
+                      })}
+                    </Select>
+                    
+                    
+                    <TextField
+                      autoFocus
+                      autoComplete
+                      margin="dense"
+                      id="heading"
+                      label={note.title}
+                      type="text"
+                      fullWidth
+                      value={noteHeading}
+                      onChange={(e) => setNoteHeading(e.target.value)}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="noteText"
+                      label="Text"
+                      type="text"
+                      fullWidth
+                      multiline={true}
+                      placeholder="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tatio"
+                      value={noteText}
+                      onChange={(e) => setNoteText(e.target.value)}
+                    />
+                     <TextField
+                      margin="dense"
+                      id="notePages"
+                      label="Seiten"
+                      type="number"
+                      fullWidth
+                      value={notePages}
+                      onChange={(e) => setNotePages(e.target.value)}
+                    />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isFavorite}
+                            onChange={() => setIsFavorite(!isFavorite)}
+                            name="isFavorite"
+                            color="primary"
+                          />
+                        }
+                        label="Favorit"
+                      />
+                      <TextField
+                        margin="dense"
+                        id="noteTags"
+                        label="Stichwort"
+                        type="text"
+                        fullWidth
+                        value={noteTags}
+                        onChange={(e) => setNoteTags([e.target.value])}
+                      />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleEditClose} color="primary">
+                      Abbrechen
+                    </Button>
+                    <Button  onClick={() => {handleEditClose(); onCreateNote()}} color="primary">
+                      Speichern
+                    </Button>
+                  </DialogActions>
+                </Dialog>
         </div>
     </>
 

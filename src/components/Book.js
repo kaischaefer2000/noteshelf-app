@@ -30,7 +30,7 @@ export default function Book({book, active}) {
           title="Contemplative Reptile"
         />
         
-        <CardContent style={{width: "70%"}}>
+        <CardContent style={{width: "65%"}}>
           <Badge 
             badgeContent={book.notes.length} 
             classes={{ badge: "badge" }}

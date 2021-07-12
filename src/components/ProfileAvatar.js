@@ -15,7 +15,7 @@ import { LoopCircleLoading	 } from 'react-loadingg';
 
 function ProfileAvatar({booksArticles, books, articles, userImage, userName}) {
     const [currentUser, setCurrentUser] = React.useState(useContext(AuthContext));
-    console.log(currentUser);
+
     const mediumWithNotes = booksArticles.filter( (medium) => medium.notes );
 
     const mediumNotes = [];

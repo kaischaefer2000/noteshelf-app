@@ -50,7 +50,7 @@ export default function Articlenotes({notes, userMail, articles}) {
         if(selectedArticle !== undefined){
             setSelectedArticleNotes(selectedArticle.notes)
         }
-    }, [reading])
+    }, [reading, articles])
     
   return (
       <>
@@ -59,7 +59,7 @@ export default function Articlenotes({notes, userMail, articles}) {
                 <ImportContactsIcon/>
                 <h1 style={{padding: '1em', fontSize: '1rem'}}>{reading}</h1>
             </Fab>
-            <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Artikel löschen</u></p>
+            <p className="absolute text-red-500 right-5 top-20 mt-11 cursor-pointer" onClick={handleClickOpen}><u>Artikel löschen</u></p>
             {(() => {
                switch (selectedArticleNotes && selectedArticleNotes.length) {
                   case 0:

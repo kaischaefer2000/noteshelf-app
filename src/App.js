@@ -9,7 +9,7 @@ import SingleNote from "./pages/SingleNote"
 import NoteView from "./components/NoteView"
 import Stichwort from "./pages/Stichwort"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Bookshelf from './components/Bookshelf'
 import Booknotes from "./components/BookNotes"
 import Articlenotes from "./components/ArticleNotes"
@@ -20,11 +20,11 @@ import PrivateRoute from './PrivateRoute'
 import SignUpp from './pages/SignUp'
 import LogIn from './pages/LogIn'
 import {RecoilRoot} from 'recoil';
-import { atom, useRecoilState, useRecoilValue} from 'recoil';
+import { atom, useRecoilState} from 'recoil';
 
 export const dataA = atom({
     key: "dataAtom",
-    default: [],
+    default: ["input"],
   })
 
 export const userA = atom({
@@ -45,19 +45,17 @@ function App() {
     const [readings, setReadings] = useRecoilState(dataA)
     const [reader, setReader] = useRecoilState(userA)
 
-     let userEmailAdress = firebase.auth().currentUser;
- console.log(userEmailAdress)
+    let userEmailAdress = firebase.auth().currentUser;
 
-
- firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setBenutzer(user.email)
-      console.log(user.email)
-    } else {
-      console.log("kein User angemeldet")
-      setBenutzer("default")
-    }
-  });
+    firebase.auth().onAuthStateChanged((user) => {
+       if (user) {
+         setBenutzer(user.email)
+         console.log(user.email)
+       } else {
+         console.log("kein User angemeldet")
+         setBenutzer("default")
+       }
+     });
   
     useEffect(() => {
       firebase
@@ -94,42 +92,7 @@ function App() {
     }, [benutzer])
    
 
-  // var num = 0
-  //   React.useEffect(() => {
-  //     const fetchData = async () =>{
-  //       const db = firebase.firestore()
-  //       const data = await db.collection("user").get()
-  //       const daten = data.docs.map(doc => doc.data())
-  //       const userData = daten.filter((u) => (u.email == benutzer))
-  //       const userInfos = userData[0]
-  //       if( (userInfos != null) && (num = 0)){
-  //         setUserImage(userInfos.image)
-  //         setUserName(userInfos.name)
-  //         setUserMail(userInfos.email)
-  //         num = num +1
-  //       }
-  //     }
-  //       fetchData()
-  //   }, [])
-
     const lectures = readings
-    // const users = useUserData()
-    // const userData = users.filter((u) => (u.email == benutzer))
-    // const userInfos = userData[0] 
-    
-    // var count = 0
-    // if( (userInfos != null) && (count = 0)){
-    //   setUserImage(userInfos.image)
-    //   setUserName(userInfos.name)
-    //   setUserMail(userInfos.email)
-    //   count = count +1
-    // }
-    // console.log(userInfos)
-
-   
-
-    
-
 
     var books = []
     var articles = []

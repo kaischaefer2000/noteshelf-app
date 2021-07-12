@@ -10,12 +10,14 @@ import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from '../Firebase'
 import { useHistory } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { dataA } from '../App';
 
 
 export default function Booknotes({userMail, books}) {
     var reading = useRecoilValue(clickedBook)
-
     let history = useHistory();
+    const [readings, setReadings] = useRecoilState(dataA)
 
     const onDelete = () => {
         const db = firebase.firestore()
@@ -36,9 +38,8 @@ export default function Booknotes({userMail, books}) {
       setOpen(true);
     };
 
-      const handleClose = () => {
+    const handleClose = () => {
       setOpen(false);
-    //   setRerender(value => value + 1)
     };
 
 
@@ -47,7 +48,7 @@ export default function Booknotes({userMail, books}) {
         if(selectedBook !== undefined){
             setSelectedBookNotes(selectedBook.notes)
         }
-    }, [reading])
+    }, [reading, books])
             
         
     
@@ -59,16 +60,38 @@ export default function Booknotes({userMail, books}) {
                 <ImportContactsIcon/>
                 <h1 style={{padding: '1em', fontSize: '1rem'}}>{reading}</h1>
             </Fab>
-            <p className="absolute text-red-500 right-5 top-20 cursor-pointer" onClick={handleClickOpen}><u>Buch löschen</u></p>
+            <p className="absolute text-red-500 right-5 top-20 mt-11 cursor-pointer" onClick={handleClickOpen}><u>Buch löschen</u></p>
                 {console.log(reading)}
 
             {
-                selectedBookNotes && selectedBookNotes.map((note) => {
-                        return(
-                            <Note note={note}/>
-                        )
-                    })
+                
             }
+            {(() => {
+               switch (selectedBookNotes && selectedBookNotes.length) {
+                  case 0:
+                      return (
+                        <>
+                            <div className="m-3 bg-gray-200	">
+                                <h2 className="p-5 align-center ">Für dieses Buch sind noch keine Notizen vorhanden! Gehe auf das +, um neue Notizen hinzuzufügen</h2>
+                            </div>
+                        </>
+                      )
+                      
+                  default:
+                        return (
+                            <>
+                            {
+                                selectedBookNotes && selectedBookNotes.map((note) => {
+                                    return(
+                                        <Note note={note}/>
+                                    )
+                                })
+                            }
+                        </>
+                        )
+               }
+           
+            })()}
               
             
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

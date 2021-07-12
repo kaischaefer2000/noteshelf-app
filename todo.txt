@@ -11,27 +11,6 @@ Gewünscht:
 
 
 
-,
-  "devDependencies": {
-    "firestore-export-import": "^0.15.0"
-  },
-  "description": "Technologies used: Tailwind CSS, Create React App, ...",
-  "main": "UploadData.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kaischaefer2000/noteshelf-app.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kaischaefer2000/noteshelf-app/issues"
-  },
-  "homepage": "https://github.com/kaischaefer2000/noteshelf-app#readme"
-
-
-
-
-
   In FooterNavigation, um die uid eines Document in eine eigene umzuändern
   const book1 = booksArticles.filter((book) => book.title == "Qualitative Forschung")
         const book2 = book1[0]
@@ -40,14 +19,8 @@ Gewünscht:
         console.log(noteRef)
 
 
-  BZW:   
 
-
-
-
-
-
-        TODO-List Endspurt
- 
-        - PWA
-        - Notiz anlegen bei einem Buch rendert nicht direkt
+TODO-List Endspurt
+      - Notizenübersichts und Notiz Seite dürfen nicht neu geladen werden
+      - Mehrmals Klicken bei FooterNavigation
+      - Stichwort Seite nicht neu laden

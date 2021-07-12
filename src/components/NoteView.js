@@ -81,8 +81,8 @@ export default function NoteView({booksArticles, userMail}) {
     console.log(readingNotes)
     const onDelete = () => {
         const db = firebase.firestore()
-        console.log(userMail)
-        const noteRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+        const uMail = firebase.auth().currentUser;
+        const noteRef = db.collection("user").doc(uMail.email).collection("readings").doc(note.book)
         noteRef.update({
           notes: readingNotes.filter(read => read.title !== note.title)
         })
@@ -106,7 +106,8 @@ export default function NoteView({booksArticles, userMail}) {
 
     React.useEffect(() => {
       const db = firebase.firestore()
-      const favRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+      const uMail = firebase.auth().currentUser;
+      const favRef = db.collection("user").doc(uMail.email).collection("readings").doc(note.book)
       favRef.update({
         notes: readingNotes.filter(read => read.title !== note.title)
       })
@@ -151,13 +152,23 @@ export default function NoteView({booksArticles, userMail}) {
 
     const onCreateNote = () => {
         const db = firebase.firestore()
-        var noteRef = db.collection("user").doc(userMail).collection("readings").doc(note.book)
+        const uMail = firebase.auth().currentUser;
+        var noteRef = db.collection("user").doc(uMail.email).collection("readings").doc(note.book)
         noteRef.update({
           notes: readingNotes.filter(read => read.title !== note.title)
         })
         noteRef.update({
           notes: firebase.firestore.FieldValue.arrayUnion({title: noteHeading, book: bookRef, text: noteText, pages: notePages, isFavorite: isFavorite, tags: noteTags})
         })
+        setNote({
+           ...note,
+           title: noteHeading, 
+           book: bookRef, 
+           text: noteText, 
+           pages: notePages, 
+           isFavorite: isFavorite, 
+           tags: noteTags
+         })
     }
 
   

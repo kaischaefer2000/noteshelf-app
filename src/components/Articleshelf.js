@@ -1,6 +1,5 @@
 import React from 'react';
 import Article from './Article';
-import {Link} from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
 
 export const clickedArticle = atom({
@@ -30,11 +29,9 @@ export default function Articleshelf({articles}) {
             articles.map((article) => {
                 const activeAArticle = article.title;
                 return(
-                  <Link to="/artikel-notizen">
                     <div onClick={() => navigateToANotes(activeAArticle)} style={{zIndex: '999'}}>
                       <Article article={article}/>
                     </div>
-                  </Link>
                 )
             })
         }

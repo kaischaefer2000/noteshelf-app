@@ -54,7 +54,7 @@
   "bugs": {
     "url": "https://github.com/kaischaefer2000/noteshelf-app/issues"
   },
-  "homepage": "https://github.com/kaischaefer2000/noteshelf-app#readme",
+  "homepage": "https://thoughtcollector.netlify.app/",
   "scripts": {
     "build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css",
     "watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/tailwind.output.css -c 'npm run build:tailwind'",
